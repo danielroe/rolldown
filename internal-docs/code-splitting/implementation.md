@@ -374,6 +374,8 @@ When `strictExecutionOrder` is off, `sort_chunk_importees` sets the order in two
 
 The first step alone is not sufficient. `exec_order` comes from one depth-first walk over all entries (`sort_modules`). A module that an earlier entry imports gets an early `exec_order`, even when this chunk imports it after other modules. In `code_splitting/chunk_import_source_order`, entry `a` imports `read.js` first. Entry `b` imports `init.js` before `read.js`, and `init.js` sets a global that `read.js` reads. With the first step alone, `b` imports the `read.js` chunk first.
 
+Runtime placement relies on this sort. In `code_splitting/runtime_host_entry_import_order`, the runtime used to be in the `namespace.js` chunk. The runtime module gave that chunk `exec_order` 0, so entry `c` imported that chunk first only by accident. The runtime is no longer in that chunk, so with the first step alone, `c` imports the `common.js` chunk first.
+
 `chunk_importee_ranks` walks the static imports depth-first, in source order. The walk starts at these modules, in this order:
 
 1. The entry module of an entry chunk.
