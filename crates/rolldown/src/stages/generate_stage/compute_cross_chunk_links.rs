@@ -340,7 +340,7 @@ impl GenerateStage<'_> {
   /// `exec_order` comes from one walk over all entries. Thus a module that an earlier entry imports
   /// can sort before a module that this chunk imports first.
   /// See internal-docs/code-splitting/implementation.md#chunk-import-order.
-  fn chunk_importee_ranks(
+  pub(super) fn chunk_importee_ranks(
     &self,
     chunk_graph: &ChunkGraph,
     chunk_idx: ChunkIdx,
